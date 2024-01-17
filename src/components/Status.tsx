@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
 export const Status = styled.div`
-  margin-top: 20px;
-  font-size: 18px;
+  margin-bottom: 2rem;
+  font-size: var(--fs-med);
 `

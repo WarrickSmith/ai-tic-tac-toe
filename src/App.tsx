@@ -39,10 +39,10 @@ const App: React.FC = () => {
 
   return (
     <Container>
+      <Status>{getStatus()}</Status>
       <Board>
         {Array.from({ length: 9 }, (_, index) => renderCell(index))}
       </Board>
-      <Status>{getStatus()}</Status>
     </Container>
   )
 }
