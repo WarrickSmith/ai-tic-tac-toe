@@ -9,7 +9,7 @@ type ThemedGlobalStyledClassProps = {
 }
 
 type OptionalProps = {
-  [key: string]: any
+  [key: string]: string
 }
 
 type GlobalStyleProps = ThemedGlobalStyledClassProps & OptionalProps

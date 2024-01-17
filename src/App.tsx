@@ -1,36 +1,5 @@
 import { useState } from 'react'
-import styled from 'styled-components'
-import { motion } from 'framer-motion'
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-`
-
-const Board = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, 100px);
-  grid-gap: 10px;
-`
-
-const Cell = styled(motion.div)`
-  width: 100px;
-  height: 100px;
-  background-color: lightgray;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  cursor: pointer;
-`
-
-const Display = styled.div`
-  margin-top: 20px;
-  font-size: 18px;
-`
+import { Container, Board, Cell, Status } from './components'
 
 const App: React.FC = () => {
   const [board, setBoard] = useState(Array(9).fill(''))
@@ -73,7 +42,7 @@ const App: React.FC = () => {
       <Board>
         {Array.from({ length: 9 }, (_, index) => renderCell(index))}
       </Board>
-      <Display>{getStatus()}</Display>
+      <Status>{getStatus()}</Status>
     </Container>
   )
 }
