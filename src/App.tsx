@@ -1,5 +1,14 @@
 import { useState, useEffect } from 'react'
-import { Container, Board, Cell, Status, Restart } from './components'
+import {
+  Container,
+  GameGrid,
+  Board,
+  Cell,
+  Status,
+  Restart,
+  AiResponse,
+  GameTitle,
+} from './components'
 import { calculateWinner } from './utils'
 
 const App: React.FC = () => {
@@ -63,10 +72,14 @@ const App: React.FC = () => {
 
   return (
     <Container height={containerHeight}>
+      <GameTitle>AI Tic-Tac-Toe</GameTitle>
       <Status>{getStatus()}</Status>
-      <Board>
-        {Array.from({ length: 9 }, (_, index) => renderCell(index))}
-      </Board>
+      <GameGrid>
+        <Board>
+          {Array.from({ length: 9 }, (_, index) => renderCell(index))}
+        </Board>
+        <AiResponse placeholder="AI response will be shown here..." />
+      </GameGrid>
       <Restart
         onClick={restartGame}
         style={{ visibility: isGameOver ? 'visible' : 'hidden' }}

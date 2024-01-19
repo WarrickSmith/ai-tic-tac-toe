@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { motion } from 'framer-motion'
 
 export const Restart = styled(motion.button)`
-  margin-top: 2rem;
+  margin: 1rem 0;
   border-radius: 1rem;
   border: 3px solid var(--bg-color-alt);
   padding: 0.5rem 1rem;
@@ -16,6 +16,5 @@ export const Restart = styled(motion.button)`
   &:hover {
     color: var(--color-alt2);
     background-color: var(--bg-color-alt);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Larger shadow on hover */
   }
 `

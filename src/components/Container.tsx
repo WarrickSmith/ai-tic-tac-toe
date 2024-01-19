@@ -7,4 +7,5 @@ export const Container = styled.div<{ height: number }>`
   align-items: center;
   justify-content: center;
   height: ${(props) => props.height}px;
+  overflow-y: auto;
 `

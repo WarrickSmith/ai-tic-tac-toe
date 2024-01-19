@@ -7,6 +7,6 @@ export const Cell = styled(motion.div)`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: var(--fs-lge);
+  font-size: 10vh;
   cursor: pointer;
 `
