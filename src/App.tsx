@@ -1,11 +1,32 @@
-import { useState } from 'react'
-import { Container, Board, Cell, Status } from './components'
+import { useState, useEffect } from 'react'
+import { Container, Board, Cell, Status, Restart } from './components'
+import { calculateWinner } from './utils'
 
 const App: React.FC = () => {
+  const [containerHeight, setContainerHeight] = useState(window.innerHeight)
   const [board, setBoard] = useState(Array(9).fill(''))
   const [isXNext, setIsXNext] = useState(true)
-  const winner = calculateWinner(board)
+  const [winner, setWinner] = useState(calculateWinner(board))
+  const isGameOver = winner !== null || board.every((cell) => cell !== '')
 
+  useEffect(() => {
+    const handleResize = () => {
+      setContainerHeight(window.innerHeight)
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const restartGame = () => {
+    // Reset the game state to its initial values
+    setBoard(Array(9).fill(''))
+    setIsXNext(true)
+    setWinner(null)
+  }
   const handleClick = (index: number) => {
     if (board[index] || winner) return
 
@@ -13,6 +34,7 @@ const App: React.FC = () => {
     newBoard[index] = isXNext ? 'X' : 'O'
 
     setBoard(newBoard)
+    setWinner(calculateWinner(newBoard))
     setIsXNext(!isXNext)
   }
 
@@ -32,40 +54,27 @@ const App: React.FC = () => {
   const getStatus = () => {
     if (winner) {
       return `Winner: ${winner}`
+    } else if (board.every((cell) => cell !== '')) {
+      return 'Draw'
     } else {
       return `Next player: ${isXNext ? 'X' : 'O'}`
     }
   }
 
   return (
-    <Container>
+    <Container height={containerHeight}>
       <Status>{getStatus()}</Status>
       <Board>
         {Array.from({ length: 9 }, (_, index) => renderCell(index))}
       </Board>
+      <Restart
+        onClick={restartGame}
+        style={{ visibility: isGameOver ? 'visible' : 'hidden' }}
+      >
+        RESTART
+      </Restart>
     </Container>
   )
-}
-
-const calculateWinner = (squares: string[]): string | null => {
-  const lines = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-  ]
-
-  for (const [a, b, c] of lines) {
-    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a]
-    }
-  }
-
-  return null
 }
 
 export default App
