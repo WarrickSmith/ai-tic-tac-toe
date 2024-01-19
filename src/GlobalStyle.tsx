@@ -32,7 +32,7 @@ const GlobalStyle: GlobalStyleComponent<
     --border-style-alt: 1px solid white;
     --fs-xxsm: 0.5rem;
     --fs-xsm: 0.75rem;
-    --fs-sm: 1.5rem;
+    --fs-sm: 2rem;
     --fs-med: 4rem;
     --fs-lge: 8rem;
     --media-mobile: 315px;

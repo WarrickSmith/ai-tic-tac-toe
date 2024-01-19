@@ -1,9 +1,10 @@
 import styled from 'styled-components'
 
-export const Container = styled.div`
+export const Container = styled.div<{ height: number }>`
   display: flex;
   flex-direction: column;
+  width: 100vw;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: ${(props) => props.height}px;
 `
