@@ -2,6 +2,7 @@
   "name": "ai-tic-tac-toe",
   "private": true,
   "version": "0.0.1",
+  "homepage": "/tictactoe/",
   "type": "module",
   "scripts": {
     "dev": "vite",
