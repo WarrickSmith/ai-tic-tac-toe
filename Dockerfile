@@ -16,8 +16,8 @@ COPY . /app/
 # Build the application
 RUN npm run build
 
-# Expose port 3000
-EXPOSE 3000
+# Expose port 3003
+EXPOSE 3003
 
 # Start the application
 # run npm install serve -g
