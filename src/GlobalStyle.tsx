@@ -36,6 +36,8 @@ const GlobalStyle: GlobalStyleComponent<
     --fs-med: 4rem;
     --fs-lge: 8rem;
     --media-mobile: 315px;
+    --media-tablet: 768px;
+    --media-desktop: 1024px;
 
   }
 
