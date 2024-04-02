@@ -7,15 +7,16 @@ export const GameGrid = styled.div`
   height: 90%;
   width: 100%;
   grid-template-columns: repeat(2, 1fr);
-  /* justify-content: center; */
-  /* align-content: center; */
   justify-items: center;
   align-items: center;
   margin: auto;
   position: relative;
 
   @media (max-width: ${mobileBreakpoint}) {
+    height: 70%;
+    grid-gap: 2rem;
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
   }
 `
+

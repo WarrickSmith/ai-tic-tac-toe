@@ -6,7 +6,7 @@ export const Board = styled.div`
   grid-template-rows: repeat(3, 1fr);
   grid-gap: 1rem;
   width: 90%;
-  height: 90%;
+  aspect-ratio: 1 / 1; 
   justify-content: center;
   align-content: center;
   margin: auto;

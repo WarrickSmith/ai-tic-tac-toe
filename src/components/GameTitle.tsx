@@ -7,6 +7,6 @@ export const GameTitle = styled.div`
   font-size: 12vh;
 
   @media (max-width: ${mobileBreakpoint}) {
-    font-size: 12vw; // Span one column on mobile
+    font-size: 12vw; 
   }
 `
