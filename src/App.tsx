@@ -13,10 +13,13 @@ import { calculateWinner } from './utils'
 
 const App: React.FC = () => {
   const [containerHeight, setContainerHeight] = useState(window.innerHeight)
-  const [board, setBoard] = useState(Array(9).fill(''))
+  const [board, setBoard] = useState(Array(9).fill(null))
   const [isXNext, setIsXNext] = useState(true)
-  const [winner, setWinner] = useState(calculateWinner(board))
-  const isGameOver = winner !== null || board.every((cell) => cell !== '')
+  const [winner, setWinner] = useState(() => calculateWinner(board))
+
+  const isGameOver =
+    winner !== null ||
+    board.every((cell) => cell !== null && cell !== undefined && cell !== '')
 
   useEffect(() => {
     const handleResize = () => {
@@ -31,8 +34,7 @@ const App: React.FC = () => {
   }, [])
 
   const restartGame = () => {
-    // Reset the game state to its initial values
-    setBoard(Array(9).fill(''))
+    setBoard(Array(9).fill(null))
     setIsXNext(true)
     setWinner(null)
   }
@@ -40,7 +42,7 @@ const App: React.FC = () => {
     if (board[index] || winner) return
 
     const newBoard = [...board]
-    newBoard[index] = isXNext ? 'X' : 'O'
+    newBoard[index] = isXNext ? 'x' : 'o'
 
     setBoard(newBoard)
     setWinner(calculateWinner(newBoard))
@@ -55,7 +57,7 @@ const App: React.FC = () => {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
       >
-        {board[index]}
+        {board[index]?.toUpperCase()}
       </Cell>
     )
   }
@@ -78,7 +80,7 @@ const App: React.FC = () => {
         <Board>
           {Array.from({ length: 9 }, (_, index) => renderCell(index))}
         </Board>
-        <AiResponse placeholder="AI response will be shown here..." />
+        <AiResponse id="ai-response" placeholder="AI response will be shown here..." />
       </GameGrid>
       <Restart
         onClick={restartGame}
