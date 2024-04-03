@@ -12,7 +12,7 @@ export const calculateWinner = (squares: string[]): string | null => {
 
   for (const [a, b, c] of lines) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a]
+      return squares[a].toUpperCase()
     }
   }
 
