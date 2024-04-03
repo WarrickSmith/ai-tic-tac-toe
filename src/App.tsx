@@ -21,8 +21,6 @@ const App: React.FC = () => {
     winner !== null ||
     board.every((cell) => cell !== null && cell !== undefined && cell !== '')
 
-  console.log('isGameOver >> ', isGameOver, board)
-
   useEffect(() => {
     const handleResize = () => {
       setContainerHeight(window.innerHeight)
@@ -82,7 +80,7 @@ const App: React.FC = () => {
         <Board>
           {Array.from({ length: 9 }, (_, index) => renderCell(index))}
         </Board>
-        <AiResponse placeholder="AI response will be shown here..." />
+        <AiResponse id="ai-response" placeholder="AI response will be shown here..." />
       </GameGrid>
       <Restart
         onClick={restartGame}
