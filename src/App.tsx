@@ -10,6 +10,7 @@ import {
   GameTitle,
 } from './components'
 import { calculateWinner } from './utils'
+import getGeminiMove from './services/gemini/getGeminiMove'
 
 const App: React.FC = () => {
   const [containerHeight, setContainerHeight] = useState(window.innerHeight)
@@ -19,7 +20,7 @@ const App: React.FC = () => {
 
   const isGameOver =
     winner !== null ||
-    board.every((cell) => cell !== null && cell !== undefined && cell !== '')
+    board.every((cell) => cell !== null && cell !== '')
 
   useEffect(() => {
     const handleResize = () => {
@@ -38,20 +39,44 @@ const App: React.FC = () => {
     setIsXNext(true)
     setWinner(null)
   }
-  const handleClick = (index: number) => {
-    if (board[index] || winner) return
+  const handleClick = async (index: number) => {
 
+    if (board[index] || winner || isGameOver) return
     const newBoard = [...board]
     newBoard[index] = isXNext ? 'x' : 'o'
-
+    
     setBoard(newBoard)
     setWinner(calculateWinner(newBoard))
-    setIsXNext(!isXNext)
+    
+    if (winner || isGameOver || calculateWinner(newBoard)) return
+    
+    setIsXNext(() => false)
+
+    if (isXNext && !isGameOver && !winner) {
+      const aiNewMove = await getGeminiMove(newBoard)
+      const {gameBoard}= aiNewMove
+      setBoard(gameBoard)
+      setWinner(calculateWinner(gameBoard))
+      setIsXNext(()=> true)
+    }
   }
 
   const renderCell = (index: number) => {
-    return (
+    return isGameOver || !isXNext? (
       <Cell
+        style={{ opacity: 0.5, cursor: 'default' }}
+        key={index}
+        whileHover={{ scale: 1 }}
+        whileTap={{ scale: 1 }}
+      >
+        {board[index]?.toUpperCase()}
+      </Cell>
+    ) : (
+      <Cell
+        style={{
+          opacity: !isXNext ? 0.5 : 1,
+          cursor: !isXNext ? 'not-allowed' : 'pointer',
+        }}
         key={index}
         onClick={() => handleClick(index)}
         whileHover={{ scale: 1.1 }}
@@ -65,7 +90,7 @@ const App: React.FC = () => {
   const getStatus = () => {
     if (winner) {
       return `Winner: ${winner}`
-    } else if (board.every((cell) => cell !== '')) {
+    } else if (board.every((cell) => cell !== null && cell !== '')) {
       return 'Draw'
     } else {
       return `Next player: ${isXNext ? 'X' : 'O'}`
@@ -80,7 +105,10 @@ const App: React.FC = () => {
         <Board>
           {Array.from({ length: 9 }, (_, index) => renderCell(index))}
         </Board>
-        <AiResponse id="ai-response" placeholder="AI response will be shown here..." />
+        <AiResponse
+          id="ai-response"
+          placeholder="AI response will be shown here..."
+        />
       </GameGrid>
       <Restart
         onClick={restartGame}
