@@ -2,7 +2,7 @@
 FROM node:20-alpine
 
 # Deployment Environment Variables
-ENV VITE_AI_URL=$VITE_AI_UR
+ENV VITE_AI_URL=$VITE_AI_URL
 
 # Set the working directory to /app
 WORKDIR /app
