@@ -8,5 +8,5 @@ services:
       - '3003:3003'
 
     environment:
-      - VITE_AI_URL=${VITE_AI_URL}
+      - VITE_AI_URL=$VITE_AI_URL
 
