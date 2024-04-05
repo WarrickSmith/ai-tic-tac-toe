@@ -1,8 +1,11 @@
 import { GeminiPayload } from '../../types/types'
 
 const postToGeminiPrompt = async (geminiPayload: GeminiPayload) => {
+  const GEMINI_URL = import.meta.env.VITE_AI_URL || 'http://localhost:5005'
+
   try {
-    const response = await fetch('http://localhost:5005/gemini-prompt', {
+    // const response = await fetch('http://localhost:5005/gemini-prompt', {
+    const response = await fetch(`${GEMINI_URL}/gemini-prompt`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
