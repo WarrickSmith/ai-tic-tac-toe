@@ -3,8 +3,6 @@ services:
   client:
     build:
       context: ./
-      args:
-        VITE_AI_URL: $VITE_AI_URL
     restart: always
     ports:
       - '3003:3003'
