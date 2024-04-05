@@ -1,4 +1,5 @@
 ARG VITE_AI_URL
+ENV VITE_AI_URL=$VITE_AI_URL
 
 # Use an official Node runtime as a parent image
 FROM node:20-alpine
