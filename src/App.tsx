@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Container,
   GameGrid,
@@ -11,58 +11,80 @@ import {
 } from './components'
 import { calculateWinner } from './utils'
 import getGeminiMove from './services/gemini/getGeminiMove'
+import { GeminiResponse } from './types/types'
 
 const App: React.FC = () => {
   const [containerHeight, setContainerHeight] = useState(window.innerHeight)
   const [board, setBoard] = useState(Array(9).fill(null))
   const [isXNext, setIsXNext] = useState(true)
   const [winner, setWinner] = useState(() => calculateWinner(board))
+  const [history, setHistory] = useState<GeminiResponse[]>([])
+  const [aiMoveSummaries, setAiMoveSummaries] = useState<string[]>([])
+
+  const aiResponseRef = useRef<HTMLTextAreaElement>(null)
 
   const isGameOver =
-    winner !== null ||
-    board.every((cell) => cell !== null && cell !== '')
+    winner !== null || board.every((cell) => cell !== null && cell !== '')
 
   useEffect(() => {
     const handleResize = () => {
       setContainerHeight(window.innerHeight)
     }
-
     window.addEventListener('resize', handleResize)
-
     return () => {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
 
+  useEffect(() => {
+    if (aiResponseRef.current) {
+      aiResponseRef.current.scrollTop = aiResponseRef.current.scrollHeight
+    }
+  }, [aiMoveSummaries])
+
   const restartGame = () => {
     setBoard(Array(9).fill(null))
     setIsXNext(true)
     setWinner(null)
+    setHistory([])
+    setAiMoveSummaries([])
   }
-  const handleClick = async (index: number) => {
 
+const isBoardFull=(board: string[]): boolean =>{
+  return board.every((cell) => cell === 'x' || cell === 'o')
+}
+
+  const handleClick = async (index: number) => {
     if (board[index] || winner || isGameOver) return
     const newBoard = [...board]
     newBoard[index] = isXNext ? 'x' : 'o'
-    
+
+    const newHistory = [
+      ...history,
+      { myMove: index, moveSummary: 'Player Move', gameBoard: newBoard },
+    ]
+
     setBoard(newBoard)
-    setWinner(calculateWinner(newBoard))
-    
-    if (winner || isGameOver || calculateWinner(newBoard)) return
-    
+    setHistory(newHistory)
+    setWinner(() => calculateWinner(newBoard))
+
+    if (isBoardFull(newBoard) || winner || isGameOver || calculateWinner(newBoard)) return
+
     setIsXNext(() => false)
 
     if (isXNext && !isGameOver && !winner) {
-      const aiNewMove = await getGeminiMove(newBoard)
-      const {gameBoard}= aiNewMove
-      setBoard(gameBoard)
+      const aiNewMove = await getGeminiMove(newBoard, newHistory)
+      setHistory((prevHistory) => [...prevHistory, aiNewMove])
+      const { gameBoard, moveSummary } = aiNewMove
+      setBoard(() => gameBoard)
       setWinner(calculateWinner(gameBoard))
-      setIsXNext(()=> true)
+      setAiMoveSummaries((prevSummaries) => [...prevSummaries, moveSummary])
+      setIsXNext(() => true)
     }
   }
 
   const renderCell = (index: number) => {
-    return isGameOver || !isXNext? (
+    return isGameOver || !isXNext ? (
       <Cell
         style={{ opacity: 0.5, cursor: 'default' }}
         key={index}
@@ -107,7 +129,10 @@ const App: React.FC = () => {
         </Board>
         <AiResponse
           id="ai-response"
+          ref={aiResponseRef}
           placeholder="AI response will be shown here..."
+          defaultValue={aiMoveSummaries.join('\n\n')}
+          readOnly
         />
       </GameGrid>
       <Restart
