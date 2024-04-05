@@ -1,6 +1,9 @@
 # Use an official Node runtime as a parent image
 FROM node:20-alpine
 
+# Deployment Environment Variables
+ENV VITE_AI_URL=$VITE_AI_UR
+
 # Set the working directory to /app
 WORKDIR /app
 
