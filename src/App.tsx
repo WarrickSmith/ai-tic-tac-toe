@@ -72,15 +72,23 @@ const isBoardFull=(board: string[]): boolean =>{
 
     setIsXNext(() => false)
 
-    if (isXNext && !isGameOver && !winner) {
-      const aiNewMove = await getGeminiMove(newBoard, newHistory)
-      setHistory((prevHistory) => [...prevHistory, aiNewMove])
-      const { gameBoard, moveSummary } = aiNewMove
-      setBoard(() => gameBoard)
-      setWinner(calculateWinner(gameBoard))
-      setAiMoveSummaries((prevSummaries) => [...prevSummaries, moveSummary])
-      setIsXNext(() => true)
+    let aiNewMove: GeminiResponse
+    try {
+      aiNewMove = await getGeminiMove(newBoard, newHistory)
+    } catch (error) {
+      aiNewMove = {
+        myMove: 0,
+        moveSummary: "It looks like there has been a fatal error making my move and the game has now ended.",
+        gameBoard: ["x", "x", "x", "x", "x", "x", "x", "x", "x"],
+      }
     }
+
+    setHistory((prevHistory) => [...prevHistory, aiNewMove])
+    const { gameBoard, moveSummary } = aiNewMove
+    setBoard(() => gameBoard)
+    setWinner(calculateWinner(gameBoard))
+    setAiMoveSummaries((prevSummaries) => [...prevSummaries, moveSummary])
+    setIsXNext(() => true)
   }
 
   const renderCell = (index: number) => {
