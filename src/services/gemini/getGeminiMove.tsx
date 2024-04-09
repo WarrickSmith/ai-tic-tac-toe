@@ -1,5 +1,6 @@
 import postToGeminiPrompt from './postToGemini'
 import { GeminiPayload, GeminiResponse } from '../../types/types'
+import { validateGeminiResponse } from '../../utils'
 
 const geminiResponse = async (
   geminiPayload: GeminiPayload
@@ -19,7 +20,6 @@ const getGeminiMove = async (
   newBoard: string[],
   history: GeminiResponse[]
 ): Promise<GeminiResponse> => {
-
   const moveSummary = JSON.stringify(history.map((move) => move.gameBoard))
 
   const geminiPayload: GeminiPayload = {
@@ -42,6 +42,10 @@ History of moves so far: ${moveSummary}`,
   }
 
   const response = await geminiResponse(geminiPayload)
+  const validation = response
+    ? validateGeminiResponse(newBoard, response)
+    : false
+  console.log('Response Validation is: ', validation)
 
   if (response === null) {
     throw new Error('Gemini API returned a null response')
