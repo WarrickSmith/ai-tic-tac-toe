@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import postToGeminiPrompt from './postToGemini'
 import { GeminiPayload, GeminiResponse } from '../../types/types'
 import { validateGeminiResponse } from '../../utils'
@@ -24,26 +23,34 @@ const getGeminiMove = async (
   newBoard: string[],
   history: GeminiResponse[]
 ): Promise<GeminiResponse> => {
-
   const moveSummary = JSON.stringify(history.map((move) => move.gameBoard))
 
-  const geminiPayload: GeminiPayload = {
-    model: 'gemini-pro',
-    prompt: getPrompt(CURRENT_PROMPT, newBoard, moveSummary),
-    stream: false,
+  
+  let response: GeminiResponse | null = null
+  let validation: string = ''
+  let attempts = 0
+  
+  while (attempts < 5 && validation !== 'true') {
+    const geminiPayload: GeminiPayload = {
+      model: 'gemini-pro',
+      prompt: getPrompt(CURRENT_PROMPT, newBoard, moveSummary),
+      stream: false,
+    }
+
+
+    response = await geminiResponse(geminiPayload)
+    if (response === null) {
+      throw new Error('Gemini API returned a null response')
+    }
+    validation = response ? validateGeminiResponse(newBoard, response) : 'NO_RESPONSE'
+
+    if (validation === 'true') return response
+    CURRENT_PROMPT = validation
+    attempts++
+    console.log(`AI Validation attempt ${attempts} failed :`, validation)
   }
 
-  const response = await geminiResponse(geminiPayload)
-  const validation = response
-    ? validateGeminiResponse(newBoard, response)
-    : false
-  console.log('Response Validation is: ', validation)
-
-  if (response === null) {
-    throw new Error('Gemini API returned a null response')
-  }
-
-  return response
+  throw new Error(`Validating AI Response Failed ${attempts} times !!`)
 }
 
 export default getGeminiMove

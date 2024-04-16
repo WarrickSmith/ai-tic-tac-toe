@@ -4,16 +4,21 @@ export const validateGeminiResponse = (
   prevGameBoard: string[],
   response: GeminiResponse
 ): string => {
-  console.log('validateGeminiResponse :', prevGameBoard, response)
+  // Check if a response was received
+  if (
+    !response 
+  ) {
+    return 'NO_RESPONSE'
+  }
 
   // Check if the response object has the correct structure
   if (
-    !response ||
+
     !response.gameBoard ||
     !response.myMove ||
     !response.moveSummary
   ) {
-    return 'false-object has incorrect structure'
+    return 'INCORRECT_OBJECT_STRUCTURE'
   }
 
   // Check if the myMove value is a valid available position
@@ -23,31 +28,33 @@ export const validateGeminiResponse = (
 
   // Check if a previous move has been removed
   for (let i = 0; i < 9; i++) {
-    if ((prevGameBoard[i] === 'x' || prevGameBoard[i] === 'o') && response.gameBoard[i] === '') {
-      return 'false-a move has been removed'
+    if (
+      (prevGameBoard[i] === 'x' || prevGameBoard[i] === 'o') &&
+      response.gameBoard[i] === ''
+    ) {
+      return 'REMOVED_PREVIOUS_MOVE'
     }
   }
-
 
   // Check if the gameBoard has only one new position filled
   let newPositionCount = 0
   for (let i = 0; i < 9; i++) {
     if (prevGameBoard[i] !== response.gameBoard[i]) {
       if (prevGameBoard[i] === 'x' && response.gameBoard[i] === 'o') {
-        return 'false-AI replaced an "x" with "o"'
+        return 'ALTERED_PREVIOUS_MOVE'
       }
       newPositionCount++
     }
   }
   if (newPositionCount !== 1) {
-    return 'false-more than one new position filled'
+    return 'TOO_MANY_NEW_MOVES'
   }
 
   // Check if the AI made a move
   if (
     prevGameBoard.every((cell, index) => cell === response.gameBoard[index])
   ) {
-    return 'false-AI did not make a move'
+    return 'NO_MOVE_MADE'
   }
 
   return 'true'
