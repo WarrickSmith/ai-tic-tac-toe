@@ -1,30 +1,61 @@
-# React + TypeScript + Vite
+### AI Tic-Tac-Toe Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a classic game of Tic-Tac-Toe where two players can play against each other. The game is built with a modern interface and integrates with the Gemini API to provide a unique gaming experience.
 
-Currently, two official plugins are available:
+### Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: React for building user interfaces, Vite as the build tool and development server
+- **Styling**: CSS and Styled Components for component-based styling
+- **API**: Gemini API for real-time data processing via my custom API Server Backend Project
+- **Package Management**: npm for managing project dependencies
+- **Version Control**: Git for tracking changes and collaborative development
 
-## Expanding the ESLint configuration
+### Leveraging Gemini API
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+The project uses the Gemini API to play as an AI opponent 'O'.
 
-- Configure the top-level `parserOptions` property like this:
+The AI is passed:
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- **A representation of the current game board**
+- **Instructions and an example of how the AI response should be structured**
+- **Additional instructions to set context and reduce move errors**
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Installation and Local Development
+
+Follow these steps to install and run the project in your local development environment:
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/WarrickSmith/tic-tac-toe.git
+
+   cd tic-tac-toe
+   ```
+
+2. Install dependancies:
+
+   ```bash
+   npm install
+   ```
+
+3. Run the project:
+
+   ```bash
+   npm start
+   ```
+
+   This will start the server on http://localhost:3003.
+
+4. Open your browser and navigate to http://localhost:3003 to play the game.
+
+5. Configure Gemini API
+   Unfortunately, I am not sharing the URl for my API server. You can start the project for example purposes but that's as far as it goes unless you create your own API interface.
+   The payload would need to look like this:
+
+   ```bash
+   {
+       model: 'gemini-pro',
+       prompt: 'Your text prompt with instructions',
+       stream: false,
+   }
+   ```
