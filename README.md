@@ -4,7 +4,7 @@ This is a classic game of Tic-Tac-Toe where two players can play against each ot
 
 ### Technologies Used
 
-- **Frontend**: React for building user interfaces, Vite as the build tool and development server
+- **Frontend**: React for building user interfaces, Vite as the build tool and development server. Typescript.
 - **Styling**: CSS and Styled Components for component-based styling
 - **API**: Gemini API for real-time data processing via my custom API Server Backend Project
 - **Package Management**: npm for managing project dependencies
