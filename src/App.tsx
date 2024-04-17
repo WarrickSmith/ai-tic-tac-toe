@@ -50,9 +50,9 @@ const App: React.FC = () => {
     setAiMoveSummaries([])
   }
 
-const isBoardFull=(board: string[]): boolean =>{
-  return board.every((cell) => cell === 'x' || cell === 'o')
-}
+  const isBoardFull = (board: string[]): boolean => {
+    return board.every((cell) => cell === 'x' || cell === 'o')
+  }
 
   const handleClick = async (index: number) => {
     if (board[index] || winner || isGameOver) return
@@ -68,7 +68,13 @@ const isBoardFull=(board: string[]): boolean =>{
     setHistory(newHistory)
     setWinner(() => calculateWinner(newBoard))
 
-    if (isBoardFull(newBoard) || winner || isGameOver || calculateWinner(newBoard)) return
+    if (
+      isBoardFull(newBoard) ||
+      winner ||
+      isGameOver ||
+      calculateWinner(newBoard)
+    )
+      return
 
     setIsXNext(() => false)
 
@@ -78,8 +84,9 @@ const isBoardFull=(board: string[]): boolean =>{
     } catch (error) {
       aiNewMove = {
         myMove: 0,
-        moveSummary: "It looks like there has been a fatal error making my move and the game has now ended.",
-        gameBoard: ["x", "x", "x", "x", "x", "x", "x", "x", "x"],
+        moveSummary:
+          'It looks like there has been a fatal error making my move and the game has now ended.',
+        gameBoard: ['x', 'x', 'x', 'x', 'x', 'x', 'x', 'x', 'x'],
       }
     }
 
