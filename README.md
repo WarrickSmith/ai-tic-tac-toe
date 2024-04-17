@@ -46,7 +46,7 @@ Follow these steps to install and run the project in your local development envi
 
    This will start the server on http://localhost:3003.
 
-4. Open your browser and navigate to http://localhost:3003 to play the game.
+4. Open your browser and navigate to http://localhost:3003/tic-tac-toe/ to play the game. Note I host this as a /path from my personal server so Vite and React have been configured to serve the app on this basis.
 
 5. Configure Gemini API
    Unfortunately, I am not sharing the URl for my API server. You can start the project for example purposes but that's as far as it goes unless you create your own API interface.
