@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-const mobileBreakpoint = '768px'
+const mobileBreakpoint = '480px'
 
 export const GameGrid = styled.div`
   display: grid;
@@ -10,7 +10,7 @@ export const GameGrid = styled.div`
   align-items: center;
   justify-items: center;
   width: 90%;
-  height: 90%;
+  overflow: hidden;
 
   @media (max-width: ${mobileBreakpoint}) {
     overflow: hidden;
