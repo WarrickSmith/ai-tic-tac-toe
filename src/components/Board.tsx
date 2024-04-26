@@ -1,10 +1,17 @@
 import styled from 'styled-components'
 
+const mobileBreakpoint = '480px'
+
 export const Board = styled.div`
-  width: 80%;
+  width: min(80vw / 2, 40vh);
+  aspect-ratio: 1 / 1;
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: repeat(3, minmax(0, 1fr));
   gap: 1rem;
-  aspect-ratio: 1 / 1;
+  overflow: hidden;
+
+  @media (max-width: ${mobileBreakpoint}) {
+    width: min(80vw / 2, 40vh);
+  }
 `
