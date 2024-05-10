@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-
-const mobileBreakpoint = '480px'
+import breakpoints from '../utils/breakpoints'
+const { tablet } = breakpoints
 
 export const GameGrid = styled.div`
   display: grid;
@@ -10,9 +10,11 @@ export const GameGrid = styled.div`
   align-items: center;
   justify-items: center;
   width: 90%;
-  overflow: hidden; // Ensure content is not clipped
+  max-width: 100%;
+  max-height: 100%;
+  overflow: auto;
 
-  @media (max-width: ${mobileBreakpoint}) {
+  @media (max-width: ${tablet}) {
     grid-template-columns: 1fr;
     grid-template-rows: repeat(2, 1fr);
   }
