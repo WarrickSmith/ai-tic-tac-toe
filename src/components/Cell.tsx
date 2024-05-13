@@ -13,33 +13,33 @@ export const Cell = styled(motion.div)`
   cursor: pointer;
 
   /* Set a base font size */
-  font-size: 2rem;
+  font-size: 3rem;
 
   @media (max-height: 600px) {
     font-size: 2rem;
   }
 
   @media (min-width: ${mobile}) {
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
   @media (min-width: ${smallTablet}) {
-    font-size: 4rem;
+    font-size: 3rem;
   }
 
   @media (min-width: ${tablet}) {
-    font-size: 5rem;
+    font-size: 4rem;
   }
 
   @media (min-width: ${desktop}) {
-    font-size: 6rem;
+    font-size: 5rem;
   }
 
   @media (min-width: ${largeDesktop}) {
-    font-size: 7rem;
+    font-size: 6rem;
   }
 
   @media (min-width: ${xLargeDesktop}) {
-    font-size: 8rem;
+    font-size: 7rem;
   }
 `
