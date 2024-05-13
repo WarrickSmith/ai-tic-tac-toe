@@ -10,7 +10,7 @@ export const Board = styled.div`
   gap: 1rem;
   max-width: 100%;
   max-height: 100%;
-  overflow: auto;
+  /* overflow: auto; */
   aspect-ratio: 1; /* Maintain a 1:1 aspect ratio */
 
   @media (max-width: ${mobile}) {
