@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import breakpoints from '../utils/breakpoints'
-const { tablet } = breakpoints
+const { mobile, smallTablet, tablet, desktop, largeDesktop, xLargeDesktop } =
+  breakpoints
 
 export const Board = styled.div`
   display: grid;
@@ -12,15 +13,38 @@ export const Board = styled.div`
   overflow: auto;
   aspect-ratio: 1; /* Maintain a 1:1 aspect ratio */
 
-  /* If the Board must be full width or full height depending on the breakpoint,
-     set width or height to 100% and the other to auto. */
+  @media (max-width: ${mobile}) {
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: ${smallTablet}) {
+    width: 100%;
+    height: 100%;
+  }
+
   @media (max-width: ${tablet}) {
     width: auto;
     height: 100%;
   }
 
-  @media (min-width: ${parseInt(tablet) + 1}px) {
-    width: 100%;
-    height: auto;
+  @media (max-width: ${desktop}) {
+    width: auto;
+    height: 100%;
+  }
+
+  @media (max-width: ${largeDesktop}) {
+    width: auto;
+    height: 100%;
+  }
+
+  @media (max-width: ${xLargeDesktop}) {
+    width: auto;
+    height: 100%;
+  }
+
+  @media (min-width: ${xLargeDesktop}) {
+    width: auto;
+    height: 100%;
   }
 `

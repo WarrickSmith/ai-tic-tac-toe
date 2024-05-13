@@ -46,4 +46,9 @@ export const AiResponse = styled.textarea`
     width: 100%;
     height: 100%;
   }
+
+  @media (min-width: ${xLargeDesktop}) {
+    width: 100%;
+    height: 100%;
+  }
 `
