@@ -13,7 +13,7 @@ export const Cell = styled(motion.div)`
   cursor: pointer;
 
   /* Set a base font size */
-  font-size: 4rem;
+  font-size: 3rem;
 
   @media (max-height: 600px) {
     font-size: 2rem;
