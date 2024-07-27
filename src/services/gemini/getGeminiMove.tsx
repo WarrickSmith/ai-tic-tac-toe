@@ -25,24 +25,24 @@ const getGeminiMove = async (
 ): Promise<GeminiResponse> => {
   const moveSummary = JSON.stringify(history.map((move) => move.gameBoard))
 
-  
   let response: GeminiResponse | null = null
   let validation: string = ''
   let attempts = 0
-  
+
   while (attempts < 5 && validation !== 'true') {
     const geminiPayload: GeminiPayload = {
-      model: 'gemini-pro',
+      model: 'gemini-1.5-flash',
       prompt: getPrompt(CURRENT_PROMPT, newBoard, moveSummary),
       stream: false,
     }
-
 
     response = await geminiResponse(geminiPayload)
     if (response === null) {
       throw new Error('Gemini API returned a null response')
     }
-    validation = response ? validateGeminiResponse(newBoard, response) : 'NO_RESPONSE'
+    validation = response
+      ? validateGeminiResponse(newBoard, response)
+      : 'NO_RESPONSE'
 
     if (validation === 'true') return response
     CURRENT_PROMPT = validation
